@@ -17,10 +17,11 @@ func createDatabase() *database.Database {
 	return builder.BuildDatabase("postgres")
 }
 
-func createTables() {
-	_, err := db.Prepare("CREATE TABLE test (id int, name varchar);").Exec()
+func createTables(callback func()) {
+	_, err := db.Prepare("CREATE TABLE IF NOT EXISTS test (id int, name varchar);").Exec()
 	if err != nil {
 		fmt.Println("Error occured whilst creating table,", err)
 		return
 	}
+	callback()
 }

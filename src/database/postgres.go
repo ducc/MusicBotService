@@ -21,7 +21,7 @@ func NewDatabase(driver, url string) *Database {
 	return db
 }
 
-func (db *Database) Open() (*sql.DB, error) {
+func (db *Database) Open() (*Database, error) {
 	database, err := sql.Open(db.driver, db.url)
 	if err != nil {
 		return nil, err
