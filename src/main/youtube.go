@@ -68,10 +68,5 @@ func youtubeSearchRoute(writer http.ResponseWriter, request *http.Request) {
 		fmt.Println("Error searching youtube,", err)
 		return
 	}
-    for _, result := range response.Items {
-        fmt.Print("ID: " + result.Id.VideoId)
-        fmt.Print(" Title: " + result.Snippet.Title)
-        fmt.Println(" Description: " + result.Snippet.Description)
-    }
 	json.NewEncoder(writer).Encode(abstractResponse{false, API_VERSION, response.Items})
 }
