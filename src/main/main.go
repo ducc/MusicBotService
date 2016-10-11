@@ -1,6 +1,7 @@
 package main
 
 import (
+	"../database"
 	"../route"
 	"encoding/json"
 	"fmt"
@@ -9,7 +10,10 @@ import (
 
 const API_VERSION = "1"
 
-var conf *config
+var (
+	conf *config
+	db   *database.Database
+)
 
 type abstractResponse struct {
 	Error   bool        `json:"error"`
@@ -19,13 +23,16 @@ type abstractResponse struct {
 
 func main() {
 	conf = load("config.json")
+	db = createDatabase()
+	db.Open()
+	createTables()
+	fmt.Println("Database loaded!")
 	controller := route.NewRouteController()
 	controller.ErrorHandler(errorHandler)
-    controller.ApiVersion("v1")
+	controller.ApiVersion("v1")
 	registerRoutes(controller)
 	http.HandleFunc("/", controller.Handle)
 	http.ListenAndServe(":8080", nil)
-	fmt.Println("Server started!")
 }
 
 func errorHandler(writer http.ResponseWriter, _ *http.Request, status int, body string) {

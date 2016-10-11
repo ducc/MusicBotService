@@ -9,37 +9,36 @@ import (
 
 const REQUEST_URL = "https://www.googleapis.com/youtube/v3/search"
 
+var cache = make(map[string]*searchResponse)
+
 type searchResponse struct {
-	Items []result `json:"items"`
-}
-
-type result struct {
-	Id      resultId `json:"id"`
-	Snippet snippet  `json:"snippet"`
-}
-
-type resultId struct {
-	VideoId string `json:"videoId"`
-}
-
-type snippet struct {
-	ChannelId    string `json:"channelId"`
-	Title        string `json:"title"`
-	Description  string `json:"description"`
-	ChannelTitle string `json:"channelTitle"`
+	Items []struct {
+		Id struct {
+			VideoId string `json:"videoId"`
+		} `json:"id"`
+		Snippet struct {
+			ChannelId    string `json:"channelId"`
+			Title        string `json:"title"`
+			Description  string `json:"description"`
+			ChannelTitle string `json:"channelTitle"`
+		} `json:"snippet"`
+	} `json:"items"`
 }
 
 func search(url string) (*searchResponse, error) {
+	if cachedValue, ok := cache[url]; ok {
+		return cachedValue, nil
+	}
 	response, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
-    var sResponse searchResponse
+	var sResponse searchResponse
 	err = json.NewDecoder(response.Body).Decode(&sResponse)
-    if err != nil {
-        return nil, err
-    }
-    return &sResponse, err
+	if err != nil {
+		return nil, err
+	}
+	return &sResponse, err
 }
 
 func getUrl(query string) (*string, error) {

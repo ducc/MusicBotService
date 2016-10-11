@@ -1,5 +1,12 @@
 {
   "api_keys": {
     "youtube": "AIzaSyA30EDNDvb_BywqiNMZc1WNmAYuUCa4zbE"
+  },
+  "database": {
+    "host": "localhost",
+    "username": "postgres",
+    "password": "password",
+    "database": "go",
+    "ssl": false
   }
 }

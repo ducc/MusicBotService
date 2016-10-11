@@ -7,11 +7,16 @@ import (
 )
 
 type config struct {
-	Keys apiKeys `json:"api_keys"`
-}
-
-type apiKeys struct {
-	Youtube string `json:"youtube"`
+	Database struct {
+		Host     string
+		Username string
+		Password string
+		Database string
+		Ssl      bool
+	}
+	Keys struct {
+		Youtube string
+	} `json:"api_keys"`
 }
 
 func load(filename string) *config {
