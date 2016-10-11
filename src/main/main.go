@@ -21,6 +21,7 @@ func main() {
 	conf = load("config.json")
 	controller := route.NewRouteController()
 	controller.ErrorHandler(errorHandler)
+    controller.ApiVersion("v1")
 	registerRoutes(controller)
 	http.HandleFunc("/", controller.Handle)
 	http.ListenAndServe(":8080", nil)
@@ -34,6 +35,6 @@ func errorHandler(writer http.ResponseWriter, _ *http.Request, status int, body 
 }
 
 func registerRoutes(controller *route.RouteController) {
-	controller.Register("/", indexRoute)
-	controller.Register("/search/youtube", youtubeSearchRoute)
+	controller.Register("/", "GET", indexRoute)
+	controller.Register("/search/youtube", "GET", youtubeSearchRoute)
 }
