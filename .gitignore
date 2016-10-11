@@ -4,3 +4,4 @@ target
 MusicBotService.iml
 run.bat
 *.exe
+config.json
