@@ -27,7 +27,7 @@ func (db *Database) Open() (*Database, error) {
 		return nil, err
 	}
 	db.db = database
-	return database, nil
+	return db, nil
 }
 
 func (db *Database) Close() error {
@@ -42,4 +42,8 @@ func (db Database) Prepare(sql string) *sql.Stmt {
 		return nil
 	}
 	return statement
+}
+
+func (db Database) GetDB() *sql.DB {
+	return db.db
 }

@@ -23,15 +23,18 @@ type abstractResponse struct {
 
 func main() {
 	conf = load("config.json")
-    var err error
+	loadStatements("sql")
+	var err error
 	db, err = createDatabase().Open()
-    if err != nil {
-        fmt.Println("Error opening database connection,", err)
-        return
-    }
-	go createTables(func() {
-		fmt.Println("Tables created!")
-	})
+	if err != nil {
+		fmt.Println("Error opening database connection,", err)
+		return
+	}
+	err = createTables()
+	if err != nil {
+		fmt.Println("Error creating tables,", err)
+		return
+	}
 	controller := route.NewRouteController()
 	controller.ErrorHandler(errorHandler)
 	controller.ApiVersion("v1")

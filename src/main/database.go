@@ -2,7 +2,6 @@ package main
 
 import (
 	"../database"
-	"fmt"
 )
 
 func createDatabase() *database.Database {
@@ -17,11 +16,13 @@ func createDatabase() *database.Database {
 	return builder.BuildDatabase("postgres")
 }
 
-func createTables(callback func()) {
-	_, err := db.Prepare("CREATE TABLE IF NOT EXISTS test (id int, name varchar);").Exec()
-	if err != nil {
-		fmt.Println("Error occured whilst creating table,", err)
-		return
+func createTables() error {
+	stmts := getCreateStatements()
+	for _, stmt := range stmts {
+		_, err := db.GetDB().Exec(stmt)
+		if err != nil {
+			return err
+		}
 	}
-	callback()
+	return nil
 }

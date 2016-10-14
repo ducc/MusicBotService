@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS payments (
+  id SERIAL8 NOT NULL PRIMARY KEY,
+  user_id VARCHAR(255) NOT NULL,
+  date DATE NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
