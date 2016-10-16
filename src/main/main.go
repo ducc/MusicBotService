@@ -51,5 +51,5 @@ func errorHandler(writer http.ResponseWriter, _ *http.Request, status int, body 
 
 func registerRoutes(controller *route.RouteController) {
 	controller.Register("/", "GET", indexRoute)
-	controller.Register("/search/youtube", "GET", youtubeSearchRoute)
+	controller.Register("/youtube/search", "GET", youtubeSearchRoute)
 }
