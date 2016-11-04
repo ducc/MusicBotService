@@ -5,4 +5,8 @@ API service for music bot
 Super secret!
 
 ## How can I use this?
-If you know go, build it. Otherwise you probably shouldn't.
+```
+go build ./src/main
+```
+
+Will add a makefile soon.

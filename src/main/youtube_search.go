@@ -97,6 +97,7 @@ func getInfoUrl(ids []string) (*string, error) {
 	params.Add("part", "contentDetails")
 	params.Add("id", strings.Join(ids, ","))
 	params.Add("key", conf.Keys.Youtube)
+	params.Add("type", "video")
 	address.RawQuery = params.Encode()
 	requestUrl := address.String()
 	return &requestUrl, nil
